@@ -1,15 +1,13 @@
 <template>
-    <transition name="alert-in" enter-active-class="animated flipInX" leave-active-class="animated flipOutX">
+    <transition name="alert-in" enter-active-class="animated bounceInLeft" leave-active-class="animated bounceOutRight">
         <div class="card">
             <header class="row">
-                <div class="column one-third">
-                    <img :src="user.avatar_url" class="avatar" alt="">
-                </div>
-                <div class="column two-thirds">
-                    <h3>{{ user.name }}</h3>
-                    <p>{{ user.bio }}</p>
+                <img :src="user.avatar_url" class="avatar" alt="">
+                <div class="field-container">
+                    <h3>{{ user.name || 'No Name'}}</h3>
+                    <p>{{ user.bio || 'No bio' }}</p>
                     <hr />
-                    <div>
+                    <div class="field-important">
                         <p><span class="label">Company :</span> {{ user.company || 'none'}}</p>
                         <p><span class="label">Followers :</span>&nbsp;<span class="counter">{{ user.followers || 0 }}</span></p>
                         <p><span class="label">Following :</span>&nbsp;<span class="counter">{{ user.following || 0}}</span></p>
@@ -34,11 +32,30 @@ export default {
 <style scoped>
 
     .card {
+        padding: 10px;
+        background: #FFFFFF;
+    }
+
+    hr {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .field-container {
+        flex: 1;
+        margin-left: 20px;
     }
 
     header {
         display: flex;
+        height: 270px;
     }
+
+    .field-important p {
+        margin-bottom: 10px;
+    }
+
+    p { margin: 0; }
 
     .counter {
         display: inline-block;
@@ -51,7 +68,7 @@ export default {
         border-radius: 20px;
     }
 
-    header img.avatar { width: 100%; border-radius: 6px !important;}
+    header img.avatar { height: 100%; border-radius: 6px !important;}
 
     @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
 

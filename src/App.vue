@@ -17,6 +17,7 @@
 import Search from './components/Search.vue'
 import Card from './components/Card.vue'
 import User from './shared/User.class.js'
+import Repo from './shared/Repo.class.js'
 
 export default {
     name: 'app',
@@ -25,25 +26,31 @@ export default {
 
             this.notFound = null;
 
-            let url = new Request(`https://api.github.com/users/${value}`)
+            let urls = [
+                `https://api.github.com/users/${value}`,
+                `https://api.github.com/users/${value}/repos`
+            ]
 
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            let promises = urls.map(url => fetch(url).then(y => y.json()))
 
-            fetch(url)
-                .then(response => response.json() )
-                .then(object => {
-                    if (!object.hasOwnProperty('login')) throw new Error('NOT_FOUND')
+            Promise.all(promises)
+                .then(results => {
+                    let
+                        user = results[0],
+                        repos = results[1]
 
-                    this.notFound = false;
-                    console.log(object);
+                        if (!user.hasOwnProperty('login')) throw new Error('NOT_FOUND')
 
-                    this.user = new User(object);
-                    console.log(this.user);
+                        repos = repos.map(repo => new Repo(repo));
+
+
+                        this.notFound = false;
+                        this.user = new User(user, repos);
+                        console.log(this.user);
+
 
                 })
-                .catch(error => {
-                    if (error.message === 'NOT_FOUND') this.notFound = true;
-                })
+                .catch(e => { if (error.message === 'NOT_FOUND') this.notFound = true })
         },
     },
     data() {
