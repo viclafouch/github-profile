@@ -1,7 +1,7 @@
 <template>
   <div class="search-container">
     <form @submit.prevent="search">
-        <input name="search" placeholder="Search..." autocomplete="off" spellcheck="false" v-model="input" />
+        <input name="search" autofocus placeholder="Search..." autocomplete="off" spellcheck="false" v-model="input" />
     </form>
   </div>
 </template>

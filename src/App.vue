@@ -28,7 +28,8 @@ export default {
 
             let urls = [
                 `https://api.github.com/users/${value}`,
-                `https://api.github.com/users/${value}/repos`
+                `https://api.github.com/users/${value}/repos`,
+                `https://api.github.com/users/${value}/starred`
             ]
 
             let promises = urls.map(url => fetch(url).then(y => y.json()))
@@ -43,6 +44,7 @@ export default {
 
                         repos = repos.map(repo => new Repo(repo));
 
+                        repos = repos.sort((left, right) => this.$moment.utc(right.created_at).diff(this.$moment.utc(left.created_at))).slice(0, 5);
 
                         this.notFound = false;
                         this.user = new User(user, repos);
@@ -50,7 +52,7 @@ export default {
 
 
                 })
-                .catch(e => { if (error.message === 'NOT_FOUND') this.notFound = true })
+                .catch(e => { if (e.message === 'NOT_FOUND') this.notFound = true })
         },
     },
     data() {
@@ -76,7 +78,7 @@ export default {
     @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 
     body {
-        background-color: #EEEEEE;
+        background-color: #f1f1f1;
         font-family: 'Montserrat', sans-serif;
     }
 </style>
