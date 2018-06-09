@@ -9,20 +9,20 @@
                         <p>{{ user.bio || 'No bio' }}</p>
                         <hr class="intermediaire" />
                         <div class="field-important">
-                            <p><span class="label">Company :</span> {{ user.company || 'none'}}</p>
-                            <p><span class="label">Followers :</span>&nbsp;<span class="counter">{{ user.followers || 0 }}</span></p>
-                            <p><span class="label">Following :</span>&nbsp;<span class="counter">{{ user.following || 0}}</span></p>
+                            <p><span class="label bold">Company :</span> {{ user.company || 'none'}}</p>
+                            <p><span class="label bold">Followers :</span>&nbsp;<span class="counter">{{ user.followers || 0 }}</span></p>
+                            <p><span class="label bold">Following :</span>&nbsp;<span class="counter">{{ user.following || 0}}</span></p>
                         </div>
                     </div>
                 </header>
             </div>
             <hr/>
-            <div class="card-body row counter-container">
-                <div>
-                    <span>Last repositories</span>
+            <div class="card-body row menu-container">
+                <div v-bind:class="{ active: activeMenu === 0 }">
+                    <span v-on:click="activeMenu = 0">Last repositories</span>
                 </div>
-                <div>
-                    <span>Last stars</span>
+                <div v-bind:class="{ active: activeMenu === 1 }">
+                    <span v-on:click="activeMenu = 1">Last stars</span>
                 </div>
                 <div>
                     <span>Last Datas</span>
@@ -30,7 +30,8 @@
             </div>
             <hr/>
             <div class="card-body row container">
-                <ReposList :repos="user.repos" :user="user"/>
+                <ReposList v-if="this.activeMenu === 0" :repos="user.repos" :user="user"/>
+                <ReposList v-if="this.activeMenu === 1" :repos="user.starred" :user="user"/>
             </div>
         </div>
     </transition>
@@ -47,6 +48,14 @@ export default {
     components: {
         ReposList,
     },
+    computed: {
+
+    },
+    data() {
+        return {
+            activeMenu: 0
+        }
+    }
 }
 </script>
 
@@ -55,7 +64,7 @@ export default {
 
     .card {
         background: #FFFFFF;
-        /* box-shadow: 0 10px 6px -6px #777; */
+        margin: 20px 0;
         border: 2px solid #cecece;
     }
 
@@ -64,11 +73,11 @@ export default {
         padding: 10px;
     }
 
-    .counter-container {
+    .menu-container {
         display: flex;
     }
 
-    .counter-container > div {
+    .menu-container > div {
         flex: 1;
         text-align: center;
     }
@@ -108,6 +117,16 @@ export default {
         color: #586069;
         background-color: rgba(27,31,35,0.08);
         border-radius: 20px;
+    }
+
+    .menu-container > div span {
+        color: #586069;
+        opacity: 0.70;
+        cursor: default;
+    }
+    .menu-container > div.active span {
+        color: #000!important;
+        opacity: 1;
     }
 
     header img.avatar { height: 100%; border-radius: 6px !important;}

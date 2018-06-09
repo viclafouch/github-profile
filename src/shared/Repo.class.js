@@ -14,9 +14,11 @@ export default class Repo {
         this.email = repo.email || null
         this.created_at = moment(repo.created_at) || null
         this.html_url = repo.html_url || null
+        this.language = repo.language || null
         this.homepage = repo.homepage || null
-        this.watchers_count = repo.watchers_count || null
-        this.open_issues_count = repo.open_issues_count || null
+        this.watchers_count = repo.watchers_count || 0
+        this.open_issues_count = repo.open_issues_count || 0
         this.full_name = repo.full_name || null
+        this.stargazers_count = repo.stargazers_count || 0;
     }
 }
