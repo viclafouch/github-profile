@@ -1,14 +1,14 @@
 <template>
-  <div class="search-container">
-    <form @submit.prevent="search">
-        <div class="field">
-            <input name="search" autofocus placeholder="Search..." autocomplete="off" spellcheck="false" v-model="input" />
-            <span v-if="isLoading" class="loader">
-                <font-awesome-icon :icon="star" spin />
-            </span>
-        </div>
-    </form>
-  </div>
+    <div class="search-container">
+        <form @submit.prevent="search">
+            <div class="field">
+                <input name="search" autofocus placeholder="Search..." autocomplete="off" spellcheck="false" v-model="input" />
+                <span v-if="isLoading" class="loader">
+                    <font-awesome-icon :icon="spinner" spin />
+                </span>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -24,14 +24,14 @@ export default {
         FontAwesomeIcon,
     },
     computed: {
-        star () {
+        spinner () {
             return faSpinner
         },
     },
-    props: ['user', 'isLoading'],
+    props: ['isLoading'],
     data() {
         return {
-            input: this.user.name
+            input: ''
         }
     },
     methods: {
@@ -43,7 +43,7 @@ export default {
         this.debouncedGetAnswer = this.$lodash.debounce(this.search, 500)
     },
     watch: {
-        input: function (newQuestion, oldQuestion) {
+        input: function () {
             this.input && this.debouncedGetAnswer();
         }
     }
@@ -58,14 +58,21 @@ export default {
     }
 
     input {
-        width: calc(100% - 40px);
-        border: 0;
+        width: 100%;
+        border: 2px solid transparent;
         padding: 20px;
+        padding-right: 70px;
+        box-sizing: border-box;
         font-size: 1.3em;
         outline: none;
         background-color: #323333;
         color: #F0F0F0;
         margin: 0;
+        transition: border-color 0.3s;
+    }
+
+    input:focus {
+        border-color: #1155cc;
     }
 
     .field {

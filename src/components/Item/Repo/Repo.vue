@@ -8,17 +8,18 @@
                         {{ repo.name }}
                     </a>
                 </h3>
-                <button>Stars <font-awesome-icon :icon="star" /></button>
+                <a :href="repo.html_url"><button><font-awesome-icon :icon="star" /> Star</button></a>
             </header>
             <div class="desc-container mgi-0">
                 <p>{{ repo.description }}</p>
             </div>
             <footer>
                 <a :href="repo.html_url + '/stargazers'"><font-awesome-icon :icon="star" /> {{ repo.stargazers_count }}</a>
-                <a :href="repo.html_url + '/network'"><font-awesome-icon :icon="network" /> {{ repo.stargazers_count }}</a>
+                <a :href="repo.html_url + '/network'"><font-awesome-icon :icon="network" /> {{ repo.forks_count }}</a>
                 <a v-if="repo.homepage" :href="repo.homepage">
                     <font-awesome-icon :icon="link" /> Project URL
                 </a>
+                <span>Updated {{ repo.updated_at.fromNow() }} </span>
             </footer>
         </div>
     </article>
@@ -31,6 +32,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faStar from '@fortawesome/fontawesome-free-solid/faStar'
 import faCodeBranch from '@fortawesome/fontawesome-free-solid/faCodeBranch'
 import faLink from '@fortawesome/fontawesome-free-solid/faLink'
+import faEye from '@fortawesome/fontawesome-free-solid/faEye'
 
 export default {
     name: 'Repo',
@@ -47,6 +49,9 @@ export default {
         },
         link () {
             return faLink
+        },
+        eye () {
+            return faEye
         }
     },
 
@@ -68,7 +73,8 @@ export default {
 
     article header {
         display: flex;
-        justify-content: space-between
+        justify-content: space-between;
+        align-items: center;
     }
 
     article header h3 {
@@ -85,19 +91,8 @@ export default {
         font-weight: 400 !important;
     }
 
-     article header h3 a:hover {
+    article header h3 a:hover {
         text-decoration: underline
-     }
-
-    article header button {
-        padding: 3px 10px;
-        font-size: 12px;
-        height: auto;
-        text-transform: none;
-        line-height: 20px;
-        color: #24292e;
-        background-color: #eff3f6;
-        background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
     }
 
     article .desc-container {

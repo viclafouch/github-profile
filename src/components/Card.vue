@@ -1,55 +1,56 @@
 <template>
-    <transition name="alert-in" enter-active-class="animated bounceInLeft" leave-active-class="animated bounceOutRight">
-        <div class="card">
-            <div class="card-body">
-                <header class="row">
-                    <img :src="user.avatar_url" class="avatar" alt="">
-                    <div class="field-container">
+    <div class="card">
+        <div class="card-body">
+            <header class="row">
+                <img :src="user.avatar_url" class="avatar" alt="">
+                <div class="field-container">
+                    <div>
                         <h3>{{ user.name || 'No Name'}}</h3>
-                        <p>{{ user.bio || 'No bio' }}</p>
-                        <hr class="intermediaire" />
-                        <div class="field-important">
-                            <p><span class="label bold">Company :</span> {{ user.company || 'none'}}</p>
-                            <p><span class="label bold">Followers :</span>&nbsp;<span class="counter">{{ user.followers || 0 }}</span></p>
-                            <p><span class="label bold">Following :</span>&nbsp;<span class="counter">{{ user.following || 0}}</span></p>
-                        </div>
+                        <a :href="user.html_url"><button>Follow</button></a>
                     </div>
-                </header>
+                    <p>{{ user.bio || 'No bio' }}</p>
+                    <hr class="intermediaire" />
+                    <div class="field-important">
+                        <p><span class="label bold">Company&nbsp;:</span> {{ user.company || 'none'}}</p>
+                        <p><span class="label bold">Followers&nbsp;:</span>&nbsp;<span class="counter">{{ user.followers || 0 }}</span></p>
+                        <p><span class="label bold">Following&nbsp;:</span>&nbsp;<span class="counter">{{ user.following || 0}}</span></p>
+                        <p><span class="label bold">Created&nbsp;:</span>&nbsp;<span>{{ user.created_at.format('LL') }}</span></p>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <hr/>
+        <div class="card-body row menu-container">
+            <div v-bind:class="{ active: activeMenu === 0 }"  v-on:click="activeMenu = 0">
+                <span>Last repositories</span>
             </div>
-            <hr/>
-            <div class="card-body row menu-container">
-                <div v-bind:class="{ active: activeMenu === 0 }">
-                    <span v-on:click="activeMenu = 0">Last repositories</span>
-                </div>
-                <div v-bind:class="{ active: activeMenu === 1 }">
-                    <span v-on:click="activeMenu = 1">Last stars</span>
-                </div>
-                <div>
-                    <span>Last Datas</span>
-                </div>
+            <div v-bind:class="{ active: activeMenu === 1 }" v-on:click="activeMenu = 1">
+                <span>Last stars</span>
             </div>
-            <hr/>
-            <div class="card-body row container">
-                <ReposList v-if="this.activeMenu === 0" :repos="user.repos" :user="user"/>
-                <ReposList v-if="this.activeMenu === 1" :repos="user.starred" :user="user"/>
+            <div>
+                <span>Last news</span>
             </div>
         </div>
-    </transition>
+        <hr/>
+        <div class="card-body row container">
+            <ReposList v-if="this.activeMenu === 0" :repos="user.repos" :user="user"/>
+            <ReposList v-if="this.activeMenu === 1" :repos="user.starred" :user="user"/>
+        </div>
+    </div>
 </template>
 
 <script>
 
-import User from '../shared/User.class.js'
 import ReposList from './Item/ReposList/ReposList.vue'
 
 export default {
     name: 'Card',
-    props: ['user'],
+    props: ['user', 'emojis'],
     components: {
         ReposList,
     },
-    computed: {
-
+    created() {
+        console.log('emojis', this.emojis);
     },
     data() {
         return {
@@ -79,6 +80,7 @@ export default {
 
     .menu-container > div {
         flex: 1;
+        padding: 5px;
         text-align: center;
     }
 

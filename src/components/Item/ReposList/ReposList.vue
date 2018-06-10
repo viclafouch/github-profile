@@ -13,10 +13,6 @@ import Repo from '../Repo/Repo.vue'
 export default {
     name: 'ReposList',
     props: ['repos', 'user'],
-    created() {
-        console.log(this.repos)
-    },
-
     components: {
         Repo
     }
