@@ -27,14 +27,15 @@
             <div v-bind:class="{ active: activeMenu === 1 }" v-on:click="activeMenu = 1">
                 <span>Last stars</span>
             </div>
-            <div>
-                <span>Last news</span>
+            <div v-bind:class="{ active: activeMenu === 2 }" v-on:click="activeMenu = 2">
+                <span>Last commits</span>
             </div>
         </div>
         <hr/>
         <div class="card-body row container">
             <ReposList v-if="this.activeMenu === 0" :repos="user.repos" :user="user"/>
             <ReposList v-if="this.activeMenu === 1" :repos="user.starred" :user="user"/>
+            <EventsList v-if="this.activeMenu === 2" :events="user.events" :user="user"/>
         </div>
     </div>
 </template>
@@ -42,15 +43,14 @@
 <script>
 
 import ReposList from './Item/ReposList/ReposList.vue'
+import EventsList from './Item/EventsList/EventsList.vue'
 
 export default {
     name: 'Card',
-    props: ['user', 'emojis'],
+    props: ['user'],
     components: {
         ReposList,
-    },
-    created() {
-        console.log('emojis', this.emojis);
+        EventsList
     },
     data() {
         return {
@@ -71,6 +71,7 @@ export default {
 
     .card-body {
         background: #FFFFFF;
+        overflow: hidden;
         padding: 10px;
     }
 

@@ -7,7 +7,8 @@ export default class User {
     constructor(
         user = {},
         repos = [],
-        starred = []
+        starred = [],
+        events = []
     ) {
         this.name = user.name || null
         this.id = user.id || null
@@ -24,5 +25,6 @@ export default class User {
 
         this.repos = repos;
         this.starred = starred;
+        this.events = events;
     }
 }

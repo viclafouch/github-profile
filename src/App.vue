@@ -10,7 +10,7 @@
             <p>Sorry, not found</p>
         </div>
         <transition name="alert-in" enter-active-class="animated bounceInLeft" leave-active-class="animated bounceOutRight">
-            <Card :user="user" v-if="user" :emojis="emojis" />
+            <Card :user="user" v-if="user" />
         </transition>
     </div>
 </template>
@@ -22,6 +22,8 @@ import Search from './components/Search.vue'
 import Card from './components/Card.vue'
 import User from './shared/User.class.js'
 import Repo from './shared/Repo.class.js'
+import PushEvent from './shared/PushEvent.class.js'
+import Commit from './shared/Commit.class.js'
 
 export default {
     name: 'app',
@@ -39,7 +41,8 @@ export default {
             let urls = [
                 `https://api.github.com/users/${value}`,
                 `https://api.github.com/users/${value}/repos`,
-                `https://api.github.com/users/${value}/starred`
+                `https://api.github.com/users/${value}/starred`,
+                `https://api.github.com/users/${value}/events`
             ]
 
             let promises = urls.map(url => fetch(url).then(y => y.json()))
@@ -49,19 +52,25 @@ export default {
                     let
                         user = results[0],
                         repos = results[1],
-                        starred = results[2]
+                        starred = results[2],
+                        events = results[3]
 
                     if (!user.hasOwnProperty('login')) throw new Error('NOT_FOUND')
 
                     repos = repos.map(repo => new Repo(repo));
                     starred = starred.map(repo => new Repo(repo));
+                    let pushEvents = events.filter(e => e.type === 'PushEvent').map(e => new PushEvent(e));
 
                     repos = repos.sort((left, right) => this.$moment.utc(right.created_at).diff(this.$moment.utc(left.created_at))).slice(0, 5);
 
                     starred = starred.sort((left, right) => this.$moment.utc(right.created_at).diff(this.$moment.utc(left.created_at))).slice(0, 5);
 
+                    pushEvents = pushEvents.sort((left, right) => this.$moment.utc(right.created_at).diff(this.$moment.utc(left.created_at))).slice(0, 5);
+
                     this.notFound = false;
-                    this.user = new User(user, repos, starred);
+                    this.user = new User(user, repos, starred, pushEvents);
+                    console.log(this.user);
+
                 })
                 .catch(() => {
                     this.user === null && (this.notFound = true)
@@ -77,16 +86,12 @@ export default {
             notFound: false,
             user: null,
             isLoading: false,
-            emojis: []
         }
     },
     computed: {
         frown() {
             return faFrown
         }
-    },
-    created() {
-       fetch('https://api.github.com/emojis').then(y => y.json()).then(y => this.emojis = y)
     },
     components: {
         Search,

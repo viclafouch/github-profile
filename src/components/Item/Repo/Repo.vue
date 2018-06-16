@@ -1,5 +1,5 @@
 <template>
-    <article>
+    <article class="repo">
         <div>
             <header>
                 <h3>
@@ -63,7 +63,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    article {
+    article.repo {
         margin-top: 8px !important;
         padding: 16px !important;
         background-color: #fff;
@@ -71,47 +71,47 @@ export default {
         border-radius: 3px;
     }
 
-    article header {
+    article.repo header {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
-    article header h3 {
+    article.repo header h3 {
         font-size: 20px;
         font-weight: 600;
     }
 
-    article header h3 a {
+    article.repo header h3 a {
         text-decoration: none;
         color: #0366d6
     }
 
-    article header h3 span:first-child {
+    article.repo header h3 span:first-child {
         font-weight: 400 !important;
     }
 
-    article header h3 a:hover {
+    article.repo header h3 a:hover {
         text-decoration: underline
     }
 
-    article .desc-container {
+    article.repo .desc-container {
         max-width: 500px;
         font-size: 14px;
     }
 
-    article footer {
+    article.repo footer {
         margin-top: 9px!important;
         font-size: 12px!important;
         color: #586069 !important;
     }
 
-    article footer a {
+    article.repo footer a {
        margin-right: 16px;
        text-decoration: none;
        color: inherit;
     }
-    article footer a:hover {
+    article.repo footer a:hover {
        color: #0366d6 !important;
     }
 </style>
