@@ -23,7 +23,6 @@ import Card from './components/Card.vue'
 import User from './shared/User.class.js'
 import Repo from './shared/Repo.class.js'
 import PushEvent from './shared/PushEvent.class.js'
-import Commit from './shared/Commit.class.js'
 
 export default {
     name: 'app',
@@ -69,7 +68,6 @@ export default {
 
                     this.notFound = false;
                     this.user = new User(user, repos, starred, pushEvents);
-                    console.log(this.user);
 
                 })
                 .catch(() => {
