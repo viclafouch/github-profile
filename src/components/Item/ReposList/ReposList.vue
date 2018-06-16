@@ -1,7 +1,11 @@
 <template>
     <div>
+         <div class="empty-section" v-if="repos.length === 0">
+            <span v-if="type">No stars</span>
+            <span v-else>No repositories</span>
+        </div>
         <div v-for="repo in repos" :key="repo.id">
-            <Repo :repo="repo" :user="user" />
+            <Repo :repo="repo" :user="user" :type="type"/>
         </div>
     </div>
 </template>
@@ -12,7 +16,7 @@ import Repo from '../Repo/Repo.vue'
 
 export default {
     name: 'ReposList',
-    props: ['repos', 'user'],
+    props: ['repos', 'user', 'type'],
     components: {
         Repo
     }

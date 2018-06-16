@@ -11,7 +11,7 @@
                     <p>{{ user.bio || 'No bio' }}</p>
                     <hr class="intermediaire" />
                     <div class="field-important">
-                        <p><span class="label bold">Company&nbsp;:</span> {{ user.company || 'none'}}</p>
+                        <p><span class="label bold">Company&nbsp;:</span><span class="bold">{{ user.company || 'none'}}</span></p>
                         <p><span class="label bold">Followers&nbsp;:</span>&nbsp;<span class="counter">{{ user.followers || 0 }}</span></p>
                         <p><span class="label bold">Following&nbsp;:</span>&nbsp;<span class="counter">{{ user.following || 0}}</span></p>
                         <p><span class="label bold">Created&nbsp;:</span>&nbsp;<span>{{ user.created_at.format('LL') }}</span></p>
@@ -34,7 +34,7 @@
         <hr/>
         <div class="card-body row container">
             <ReposList v-if="this.activeMenu === 0" :repos="user.repos" :user="user"/>
-            <ReposList v-if="this.activeMenu === 1" :repos="user.starred" :user="user"/>
+            <ReposList v-if="this.activeMenu === 1" :repos="user.starred" :user="user" type="star" />
             <EventsList v-if="this.activeMenu === 2" :events="user.events" :user="user"/>
         </div>
     </div>

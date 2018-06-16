@@ -4,7 +4,7 @@
             <header>
                 <h3>
                     <a :href="repo.html_url">
-                        <span>{{ user.login }} /</span>
+                        <span>{{ type !== 'star' ? user.login : repo.ownerLogin }} /</span>
                         {{ repo.name }}
                     </a>
                 </h3>
@@ -36,10 +36,7 @@ import faEye from '@fortawesome/fontawesome-free-solid/faEye'
 
 export default {
     name: 'Repo',
-    props: ['repo', 'user'],
-    created() {
-        console.log(this.repo)
-    },
+    props: ['repo', 'user', 'type'],
     computed: {
         star () {
             return faStar

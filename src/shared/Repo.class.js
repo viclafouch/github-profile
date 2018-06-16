@@ -19,5 +19,6 @@ export default class Repo {
         this.stargazers_count = repo.stargazers_count || 0;
         this.forks_count = repo.forks_count || 0
         this.watchers_count = repo.watchers_count || 0
+        this.ownerLogin = repo.owner.login;
     }
 }

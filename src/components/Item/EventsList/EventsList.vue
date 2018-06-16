@@ -1,6 +1,9 @@
 <template>
    <div>
-        <div v-for="event in events" :key="event.id">
+        <div class="empty-section" v-if="events.length === 0">
+            <span>No commits</span>
+        </div>
+        <div v-else v-for="event in events" :key="event.id">
             <Commit :commit="event" :user="user" />
         </div>
     </div>
