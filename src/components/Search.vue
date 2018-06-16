@@ -2,7 +2,7 @@
     <div class="search-container">
         <form @submit.prevent="search">
             <div class="field">
-                <input name="search" autofocus placeholder="Search..." autocomplete="off" spellcheck="false" v-model="input" />
+                <input name="search" autofocus placeholder="Search by login..." autocomplete="off" spellcheck="false" v-model="input" />
                 <span v-if="isLoading" class="loader">
                     <font-awesome-icon :icon="spinner" spin />
                 </span>
