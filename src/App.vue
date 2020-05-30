@@ -59,17 +59,13 @@ export default {
           `https://api.github.com/users/${value}/events`
         ]
         const promises = urls.map(url => fetch(url).then(response => response.json()))
-        const results = await Promise.all(promises)
-
-        const user = results[0]
-        let repos = results[1]
-        let starred = results[2]
-        const events = results[3]
+        let [user, repos, starred, events] = await Promise.all(promises)
 
         if (!user.login) throw new Error('NOT_FOUND')
 
         repos = repos.map(repo => new Repo(repo))
         starred = starred.map(repo => new Repo(repo))
+
         let pushEvents = events.filter(e => e.type === 'PushEvent').map(e => new PushEvent(e))
 
         repos = repos
