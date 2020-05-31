@@ -1,6 +1,7 @@
 # Github-Profile
 
 A simple app to search and get your informations about your github profile.
+
 Live demo : [https://viclafouch.github.io/github-profile/](https://viclafouch.github.io/github-profile/)
 
 ## Setup
